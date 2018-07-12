@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+    <ion-buttons end>
+        <button ion-button
+        *ngIf="!ordenando"
+        (click)="ordenando=true" >
+        Ordenando
+        </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button 
+      *ngIf="ordenando"
+      (click)="ordenando=false" >
+        Ocultar
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+  
+
+
+<ion-content padding>
+        <ion-refresher [enabled]="!ordenando"
+        (ionRefresh)="doRefresh($event)">
+            <ion-refresher-content>CargaNDO</ion-refresher-content>
+          </ion-refresher>
+  <ion-list [reorder]="ordenando" 
+  (ionItemReorder)="reordenarAnimales($event)" > 
+    <ion-item-sliding *ngFor="let animal of animales, let i = index ">
+    <ion-item (click)="reproducir( animal )" >
+      <ion-avatar item-left>
+        <img [src]="animal.imagen">
+      </ion-avatar>
+      <h2>{{ animal.nombre }}</h2>
+      <ion-icon *ngIf="!  animal.reproduciendo" name="play" item-right></ion-icon>
+      <ion-icon *ngIf="animal.reproduciendo" name="pause" item-right></ion-icon>
+    </ion-item>
+    <ion-item-options side="right">
+        <button ion-button color="danger"
+        (click)="eliminarAnimal( i )" >
+            <ion-icon name="trash"></ion-icon>
+          Eliminar
+        </button>
+    </ion-item-options>
+  </ion-item-sliding>
+  </ion-list>
+</ion-content>
